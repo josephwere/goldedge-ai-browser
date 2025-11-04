@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GoldEdge AI Browser Downloads</title>
+<style>
+body { font-family: sans-serif; text-align: center; padding: 50px; }
+a { display: block; margin: 10px; font-size: 18px; text-decoration: none; color: #d7141a; }
+</style>
+</head>
+<body>
+<h1>GoldEdge AI Browser Downloads</h1>
+<p id="version">Fetching latest version...</p>
+<div id="downloads"></div>
+
+<script>
+fetch('https://api.github.com/repos/Josephwere/goldedge-ai-browser/releases/latest')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('version').innerText = "Latest Version: " + data.tag_name;
+    const downloads = document.getElementById('downloads');
+    data.assets.forEach(a => {
+      const link = document.createElement('a');
+      link.href = a.browser_download_url;
+      link.innerText = a.name;
+      downloads.appendChild(link);
+    });
+  });
+</script>
+</body>
+</html>
