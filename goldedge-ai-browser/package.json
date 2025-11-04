@@ -1,7 +1,7 @@
-
 {
   "name": "goldedge-ai-browser",
   "version": "1.0.0",
+  "description": "GoldEdge Labs AI Browser — Multi-tab automation browser powered by OpenAI and Electron.",
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
@@ -22,18 +22,41 @@
     "electron-updater": "^6.1.1"
   },
   "build": {
-    "appId": "com.goldedge.ai-browser",
+    "appId": "com.goldedge.aibrowser",
     "productName": "GoldEdge AI Browser",
-    "directories": { "output": "dist" },
-    "publish": [{
-      "provider": "github",
-      "owner": "Josephwere",
-      "repo": "goldedge-ai-browser"
-    }],
-    "files": ["electron/**/*", "config/**/*", ".env"],
-    "mac": { "category": "public.app-category.utilities" },
-    "win": { "target": "nsis" },
-    "linux": { "target": ["AppImage","deb"] }
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "config/**/*",
+      "server/**/*",
+      "package.json",
+      ".env"
+    ],
+    "extraResources": [
+      "assets/"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "GoldEdge_AI_Browser_Setup.exe"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "artifactName": "GoldEdge_AI_Browser.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Josephwere",
+        "repo": "goldedge-ai-browser"
+      }
+    ]
   },
-  "author": "goldedgelabs@gmail.com"
+  "author": "GoldEdge Labs <goldedgelabs@gmail.com>",
+  "license": "MIT"
 }
