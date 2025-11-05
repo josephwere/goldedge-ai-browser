@@ -12,12 +12,19 @@ img.banner { max-width: 100%; height: auto; border-radius: 10px; margin-bottom: 
 </head>
 <body>
 
-<!-- Banner image: just drop your file as public/banner.png -->
+<!-- Banner image -->
 <img src="/banner.png" alt="GoldEdge Banner" class="banner" />
 
 <h1>GoldEdge AI Browser Downloads</h1>
-<p id="version">Fetching latest version...</p>
-<div id="downloads"></div>
+<p id="version">Latest Version: v1.0.0</p>
+
+<div id="downloads">
+  <!-- Placeholder installer links -->
+  <a href="/releases/GoldEdge_AI_Browser_Setup.exe" target="_blank">GoldEdge_AI_Browser_Setup.exe</a>
+  <a href="/releases/GoldEdge_AI_Browser.dmg" target="_blank">GoldEdge_AI_Browser.dmg</a>
+  <a href="/releases/GoldEdge_AI_Browser.AppImage" target="_blank">GoldEdge_AI_Browser.AppImage</a>
+  <a href="/releases/GoldEdge_AI_Browser.deb" target="_blank">GoldEdge_AI_Browser.deb</a>
+</div>
 
 <!-- WhatsApp contact -->
 <div style="margin-top: 30px;">
@@ -28,6 +35,7 @@ img.banner { max-width: 100%; height: auto; border-radius: 10px; margin-bottom: 
 
 <footer><p>Founder: Joseph Were | © 2025 GoldEdge Labs</p></footer>
 
+<!-- Optional: GitHub Release auto-update -->
 <script>
 const owner = "Josephwere";
 const repo = "goldedge-ai-browser";
@@ -35,28 +43,22 @@ const repo = "goldedge-ai-browser";
 fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
   .then(res => res.json())
   .then(data => {
-    document.getElementById('version').innerText =
-      "Latest Version: " + (data.tag_name || 'unknown');
-
-    const downloads = document.getElementById('downloads');
-    downloads.innerHTML = '';
-
+    if (data.tag_name) {
+      document.getElementById('version').innerText = "Latest Version: " + data.tag_name;
+    }
+    const downloadsDiv = document.getElementById('downloads');
     if (Array.isArray(data.assets) && data.assets.length) {
+      downloadsDiv.innerHTML = ''; // Clear placeholders
       data.assets.forEach(a => {
         const link = document.createElement('a');
         link.href = a.browser_download_url;
         link.innerText = a.name;
         link.target = "_blank";
-        downloads.appendChild(link);
+        downloadsDiv.appendChild(link);
       });
-    } else {
-      downloads.innerHTML = '<p>No installers uploaded yet. Upload binaries to GitHub Release assets.</p>';
     }
   })
-  .catch(err => {
-    document.getElementById('downloads').innerText = 'Unable to fetch release info.';
-    console.error(err);
-  });
+  .catch(err => console.error("GitHub release fetch failed:", err));
 </script>
 
 </body>
