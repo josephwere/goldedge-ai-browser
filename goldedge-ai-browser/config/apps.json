@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "NeuroEdge AI",
+      "url": "https://neuroedge.goldedge.com",
+      "autoAnswer": true,
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}
