@@ -1,4 +1,3 @@
-
 const { app, BrowserWindow } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
@@ -13,6 +12,7 @@ function createWindow() {
       contextIsolation: false,
     },
   });
+
   win.loadFile('index.html');
 }
 
@@ -21,14 +21,7 @@ app.whenReady().then(() => {
   autoUpdater.checkForUpdatesAndNotify();
 });
 
-autoUpdater.on('update-available', (info) => {
-  console.log('🚀 Update available:', info.version);
-});
+autoUpdater.on('update-available', info => console.log('Update available:', info.version));
+autoUpdater.on('update-downloaded', info => console.log('Update downloaded:', info.version));
 
-autoUpdater.on('update-downloaded', (info) => {
-  console.log('✅ Update downloaded:', info.version);
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
