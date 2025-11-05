@@ -1,0 +1,1 @@
+// Placeholder for your renderer logic (multi-tab AI browser, Playwright automation)
