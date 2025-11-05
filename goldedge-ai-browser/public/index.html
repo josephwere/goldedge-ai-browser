@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GoldEdge AI Browser Downloads</title>
+<style>
+body { font-family: sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
+a { display: inline-block; margin: 10px; padding: 10px 15px; background: #d7141a; color: white; text-decoration: none; border-radius: 5px; }
+a.whatsapp { background: #25D366; }
+img.banner { max-width: 100%; height: auto; border-radius: 10px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<img src="/banner.png" alt="GoldEdge Banner" class="banner" />
+<h1>GoldEdge AI Browser Downloads</h1>
+<p id="version">Fetching latest version...</p>
+<div id="downloads"></div>
+
+<div style="margin-top: 30px;">
+  <a href="https://wa.me/254712462780" target="_blank" class="whatsapp">
+    Contact Founder on WhatsApp
+  </a>
+</div>
+
+<footer><p>Founder: Joseph Were | © 2025 GoldEdge Labs</p></footer>
+
+<script>
+const owner = "Josephwere";
+const repo = "goldedge-ai-browser";
+
+fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('version').innerText =
+      "Latest Version: " + (data.tag_name || 'unknown');
+
+    const downloads = document.getElementById('downloads');
+    downloads.innerHTML = '';
+
+    if (Array.isArray(data.assets) && data.assets.length) {
+      data.assets.forEach(a => {
+        const link = document.createElement('a');
+        link.href = a.browser_download_url;
+        link.innerText = a.name;
+        link.target = "_blank";
+        downloads.appendChild(link);
+      });
+    } else {
+      downloads.innerHTML = '<p>No installers uploaded yet. Upload binaries to GitHub Release assets.</p>';
+    }
+  })
+  .catch(err => {
+    document.getElementById('downloads').innerText = 'Unable to fetch release info.';
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>
